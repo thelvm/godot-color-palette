@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://kefeh2qihsjg"]
 
 [ext_resource type="Theme" uid="uid://dk6nn7yxepdih" path="res://addons/color-palette/utilities/EditorTheme.tres" id="1"]
-[ext_resource type="Script" uid="uid://dqqn4iqk11gcv" path="res://addons/color-palette/ColorPaletteManager.gd" id="2"]
+[ext_resource type="Script" uid="uid://cqn6hax6luxk2" path="res://addons/color-palette/ColorPaletteManager.gd" id="2"]
 [ext_resource type="Texture2D" uid="uid://bwajt3g5v3a3y" path="res://addons/color-palette/icons/Add.svg" id="3"]
 [ext_resource type="Texture2D" uid="uid://ckxcabhwbupuu" path="res://addons/color-palette/icons/Reload.svg" id="4"]
 [ext_resource type="Texture2D" uid="uid://24l4ev42u5wa" path="res://addons/color-palette/icons/Override.svg" id="5"]

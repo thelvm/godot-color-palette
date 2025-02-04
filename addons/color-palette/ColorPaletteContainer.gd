@@ -1,4 +1,5 @@
 @tool
+class_name ColorPaletteContainer
 extends PanelContainer
 
 signal palette_updated
@@ -12,7 +13,7 @@ signal container_selected(container_object)
 @onready var grid: PaletteTileContainer = $MarginContainer/VBoxContainer/PaletteTileContainer/TileContainer as PaletteTileContainer
 
 var palette: Palette
-var undoredo: UndoRedo
+var undoredo: EditorUndoRedoManager
 var selected: bool = false: set = set_selected 
 
 
@@ -26,7 +27,7 @@ func _ready():
 #	Base settings for all color rects are set in the color tile class
 	if palette:
 		name_label.text = palette.name
-		name_label.hint_tooltip = palette.comments
+		name_label.tooltip_text = palette.comments
 		for c in palette.colors:
 #			Color rect instance properties
 			var cri: ColorTile = ColorTile.new()
@@ -72,16 +73,16 @@ func _grid_item_reordered(p_index_from: int, p_index_to: int) -> void:
 	undoredo.create_action("Reorder Palette %s" % palette.name)
 	
 #	To do, move from "from" to "to"
-	undoredo.add_do_method(palette.reorder_color.bind(p_index_from, p_index_to))
-	undoredo.add_do_method(palette.save)
-	undoredo.add_do_method(palette_updated.emit)
-	undoredo.add_do_method(palette_color_selected.emit.bind(palette, p_index_to))
+	undoredo.add_do_method(palette, "reorder_color", p_index_from, p_index_to)
+	undoredo.add_do_method(palette, "save")
+	undoredo.add_do_method(self, "emit_signal", "palette_updated")
+	undoredo.add_do_method(self, "emit_signal", "palette_color_selected", palette, p_index_to)
 	
 #	To undo, just reverse the positions!
-	undoredo.add_undo_method(palette.reorder_color.bind(p_index_to, p_index_from))
-	undoredo.add_undo_method(palette.save)
-	undoredo.add_undo_method(palette_updated.emit)
-	undoredo.add_undo_method(palette_color_selected.emit.bind(palette, p_index_from))
+	undoredo.add_do_method(palette, "reorder_color", p_index_to, p_index_from)
+	undoredo.add_do_method(palette, "save")
+	undoredo.add_do_method(self, "emit_signal", "palette_updated")
+	undoredo.add_do_method(self, "emit_signal", "palette_color_selected", palette, p_index_from)
 	
 	undoredo.commit_action()
 
@@ -97,14 +98,14 @@ func _on_tile_deleted(index):
 	undoredo.create_action("Delete Color %s from Palette %s" % [original_color.to_html(), palette.name])
 	
 #	To do, move from "from" to "to"
-	undoredo.add_do_method(palette.remove_color.bind(index))
-	undoredo.add_do_method(palette.save)
-	undoredo.add_do_method(palette_updated.emit)
+	undoredo.add_do_method(palette, "remove_color", index)
+	undoredo.add_do_method(palette, "save")
+	undoredo.add_do_method(self, "emit_signal", "palette_updated")
 	
 #	To undo, just reverse the positions!
-	undoredo.add_undo_method(palette.add_color.bind(original_color, index))
-	undoredo.add_undo_method(palette.save)
-	undoredo.add_undo_method(palette_updated.emit)
+	undoredo.add_undo_method(palette, "add_color", original_color, index)
+	undoredo.add_undo_method(palette, "save")
+	undoredo.add_undo_method(self, "emit_signal", "palette_updated")
 	
 	undoredo.commit_action()
 
@@ -115,7 +116,7 @@ func set_selected(value: bool) -> void:
 		var sb: StyleBoxFlat = get_theme_stylebox("panel").duplicate()
 		sb.bg_color = Color("#2c3141")
 		add_theme_stylebox_override("panel", sb)
-		container_selected.emit()
+		container_selected.emit(self)
 	else:
 		var sb: StyleBoxFlat = get_theme_stylebox("panel").duplicate()
 		sb.bg_color = Color(0.15, 0.17, 0.23)

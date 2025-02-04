@@ -1,4 +1,5 @@
 @tool
+class_name ColorPaletteManager
 extends MarginContainer
 
 # Palette list
@@ -20,7 +21,7 @@ extends MarginContainer
 var palette_container = preload("res://addons/color-palette/ColorPaletteContainer.tscn")
 
 var palettes: Array # of Palette
-var undoredo: UndoRedo # passed from EditorPlugin
+var undoredo: EditorUndoRedoManager # passed from EditorPlugin
 
 var selected_palette: Palette
 var selected_color_index: int
@@ -56,14 +57,14 @@ func refresh_palettes():
 		palettes.append(PaletteImporter.import_gpl(i))
 	
 	for p in palettes:
-		var pc = palette_container.instance()
+		var pc: ColorPaletteContainer = palette_container.instantiate()
 		pc.palette = p
 		pc.undoredo = undoredo
 		if selected_palette:
 			pc.selected = true if pc.palette.name == selected_palette.name else false
-		pc.connect("palette_updated", self, "refresh_palettes")
-		pc.connect("palette_color_selected", self, "_on_palette_color_selected")
-		pc.connect("container_selected", self, "_on_palette_container_selected")
+		pc.palette_updated.connect(refresh_palettes)
+		pc.palette_color_selected.connect(_on_palette_color_selected)
+		pc.container_selected.connect(_on_palette_container_selected)
 		palette_list.add_child(pc)
 
 
@@ -87,14 +88,13 @@ func _apply_new_color_to_selected_palette() -> void:
 	var original_color = selected_palette.colors[selected_color_index]
 	
 	undoredo.create_action("Change Palette Color")
-	# undoredo.add_do_method(selected_palette, "change_color", selected_color_index, new_color)
-	undoredo.add_do_method(selected_palette.change_color.bind(selected_color_index, new_color))
-	undoredo.add_do_method(selected_palette.save)
-	undoredo.add_do_method(refresh_palettes)
+	undoredo.add_do_method(selected_palette, "change_color", selected_color_index, new_color)
+	undoredo.add_do_method(selected_palette, "save")
+	undoredo.add_do_method(self, "refresh_palettes")
 	
-	undoredo.add_undo_method(selected_palette.change_color.bind(selected_color_index, original_color))
-	undoredo.add_undo_method(selected_palette.save)
-	undoredo.add_undo_method(refresh_palettes)
+	undoredo.add_undo_method(selected_palette, "change_color", selected_color_index, original_color)
+	undoredo.add_undo_method(selected_palette, "save")
+	undoredo.add_undo_method(self, "refresh_palettes")
 	undoredo.commit_action()
 
 

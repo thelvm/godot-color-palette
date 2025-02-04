@@ -14,9 +14,16 @@ config/name="Godot-color-palette"
 config/features=PackedStringArray("4.4")
 config/icon="res://icon.png"
 
+[debug]
+
+gdscript/warnings/untyped_declaration=1
+gdscript/warnings/inferred_declaration=1
+gdscript/warnings/unsafe_property_access=1
+gdscript/warnings/unsafe_method_access=1
+
 [editor_plugins]
 
-enabled=PackedStringArray("color-palette")
+enabled=PackedStringArray("res://addons/color-palette/plugin.cfg")
 
 [rendering]
 

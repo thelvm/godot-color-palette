@@ -33,7 +33,7 @@ static func import_gpl(path : String) -> Palette:
 			# Comments
 			elif line.begins_with('#'):
 				comments += line.trim_prefix('#') + '\n'
-			elif not line.empty():
+			elif not line.is_empty():
 				var matches = color_line_regex.search(line)
 				if matches:
 					var red: float = matches.get_string("red").to_float() / 255.0
