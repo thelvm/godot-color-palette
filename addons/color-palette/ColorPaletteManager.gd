@@ -1,21 +1,21 @@
-tool
+@tool
 extends MarginContainer
 
 # Palette list
-onready var refresh_list_button = $HBoxContainer/ColorPaletteContainer/OptionsContainer/RefreshList
-onready var palette_list = $HBoxContainer/ColorPaletteContainer/PaletteListScroll/PaletteList
+@onready var refresh_list_button: Button = $HBoxContainer/ColorPaletteContainer/OptionsContainer/RefreshList
+@onready var palette_list: VBoxContainer = $HBoxContainer/ColorPaletteContainer/PaletteListScroll/PaletteList
 # Options
-onready var palette_dir_le = $HBoxContainer/ColorPaletteContainer/OptionsContainer/PaletteDirectory
-onready var new_palette_name_le = $HBoxContainer/ColorPaletteContainer/OptionsContainer/NewPaletteName
-onready var new_palette_button = $HBoxContainer/ColorPaletteContainer/OptionsContainer/NewPalette
-onready var open_palette_dir_button = $HBoxContainer/ColorPaletteContainer/OptionsContainer/OpenPaletteDirectory
+@onready var palette_dir_le: LineEdit = $HBoxContainer/ColorPaletteContainer/OptionsContainer/PaletteDirectory
+@onready var new_palette_name_le: LineEdit = $HBoxContainer/ColorPaletteContainer/OptionsContainer/NewPaletteName
+@onready var new_palette_button: Button = $HBoxContainer/ColorPaletteContainer/OptionsContainer/NewPalette
+@onready var open_palette_dir_button: Button = $HBoxContainer/ColorPaletteContainer/OptionsContainer/OpenPaletteDirectory
 # Color Editor
-onready var color_picker = $HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/ColorPicker
-onready var color_preview_rect = $HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/HBoxContainer/SelectedColorRect
-onready var color_preview_label = $HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/SelectedColorLabel
-onready var apply_color_changed_button = $HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/HBoxContainer/ApplyChanges
-onready var new_color_rect = $HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/HBoxContainer/NewColorRect
-onready var new_color_button = $HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/HBoxContainer/AddNewColor
+@onready var color_picker: ColorPicker = $HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/ColorPicker
+@onready var color_preview_rect: ColorRect = $HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/HBoxContainer/SelectedColorRect
+@onready var color_preview_label: Label = $HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/SelectedColorLabel
+@onready var apply_color_changed_button: Button = $HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/HBoxContainer/ApplyChanges
+@onready var new_color_rect: ColorRect = $HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/HBoxContainer/NewColorRect
+@onready var new_color_button: Button = $HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/HBoxContainer/AddNewColor
 
 var palette_container = preload("res://addons/color-palette/ColorPaletteContainer.tscn")
 
@@ -27,12 +27,18 @@ var selected_color_index: int
 
 func _ready():
 	refresh_palettes()
-	refresh_list_button.connect("pressed", self, "refresh_palettes")
-	apply_color_changed_button.connect("pressed", self, "_apply_new_color_to_selected_palette")
-	new_palette_button.connect("pressed", self, "_create_new_palette")
-	color_picker.connect("color_changed", new_color_rect, "set_frame_color")
-	new_color_button.connect("pressed", self, "_add_color_to_selected_palette")
-	open_palette_dir_button.connect("pressed", self, "_open_dir_in_file_manager")
+	# refresh_list_button.connect("pressed", self, "refresh_palettes")
+	refresh_list_button.pressed.connect(refresh_palettes)
+	# apply_color_changed_button.connect("pressed", self, "_apply_new_color_to_selected_palette")
+	apply_color_changed_button.pressed.connect(_apply_new_color_to_selected_palette)
+	# new_palette_button.connect("pressed", self, "_create_new_palette")
+	new_palette_button.pressed.connect(_create_new_palette)
+	# color_picker.connect("color_changed", new_color_rect, "set_frame_color")
+	color_picker.color_changed.connect(func(new_color): new_color_rect.color = new_color)
+	# new_color_button.connect("pressed", self, "_add_color_to_selected_palette")
+	new_color_button.pressed.connect(_add_color_to_selected_palette)
+	# open_palette_dir_button.connect("pressed", self, "_open_dir_in_file_manager")
+	open_palette_dir_button.pressed.connect(_open_dir_in_file_manager)
 
 # Clear the palette list, load the gpl files and populate the list again
 func refresh_palettes():
@@ -81,13 +87,14 @@ func _apply_new_color_to_selected_palette() -> void:
 	var original_color = selected_palette.colors[selected_color_index]
 	
 	undoredo.create_action("Change Palette Color")
-	undoredo.add_do_method(selected_palette, "change_color", selected_color_index, new_color)
-	undoredo.add_do_method(selected_palette, "save")
-	undoredo.add_do_method(self, "refresh_palettes")
+	# undoredo.add_do_method(selected_palette, "change_color", selected_color_index, new_color)
+	undoredo.add_do_method(selected_palette.change_color.bind(selected_color_index, new_color))
+	undoredo.add_do_method(selected_palette.save)
+	undoredo.add_do_method(refresh_palettes)
 	
-	undoredo.add_undo_method(selected_palette, "change_color", selected_color_index, original_color)
-	undoredo.add_undo_method(selected_palette, "save")
-	undoredo.add_undo_method(self, "refresh_palettes")
+	undoredo.add_undo_method(selected_palette.change_color.bind(selected_color_index, original_color))
+	undoredo.add_undo_method(selected_palette.save)
+	undoredo.add_undo_method(refresh_palettes)
 	undoredo.commit_action()
 
 
@@ -119,9 +126,8 @@ func _add_color_to_selected_palette() -> void:
 
 
 func _open_dir_in_file_manager():
-	var dir := Directory.new()
 	var path = ProjectSettings.globalize_path(palette_dir_le.text)
-	if dir.dir_exists(path):
+	if DirAccess.dir_exists_absolute(path):
 		OS.shell_open(path)
 	else:
 		push_error("Invalid directory.")

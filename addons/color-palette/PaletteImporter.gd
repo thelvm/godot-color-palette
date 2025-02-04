@@ -1,6 +1,6 @@
-tool
+@tool
 class_name PaletteImporter
-extends Reference
+extends RefCounted
 
 # Adapted from Github -> Orama-Interactive/Pixelorama/src/Autoload/Import.gd
 static func import_gpl(path : String) -> Palette:
@@ -9,9 +9,9 @@ static func import_gpl(path : String) -> Palette:
 
 	var result : Palette = null
 
-	var file = File.new()
-	if file.file_exists(path):
-		file.open(path, File.READ)
+	var file: FileAccess
+	if FileAccess.file_exists(path):
+		file = FileAccess.open(path, FileAccess.READ)
 		var text = file.get_as_text()
 		var lines = text.split('\n')
 		var line_number := 0
@@ -26,8 +26,8 @@ static func import_gpl(path : String) -> Palette:
 				else:
 					result = Palette.new()
 					result.path = path
-					var name_start = path.find_last('/') + 1
-					var name_end = path.find_last('.')
+					var name_start = path.rfind('/') + 1
+					var name_end = path.rfind('.')
 					if name_end > name_start:
 						result.name = path.substr(name_start, name_end - name_start)
 			# Comments
@@ -59,8 +59,9 @@ static func import_gpl(path : String) -> Palette:
 static func get_gpl_files(path) -> Array:
 	var files = []
 
-	var dir = Directory.new()
-	if dir.open(path) == OK:
+	var dir: DirAccess
+	if DirAccess.dir_exists_absolute(path):
+		dir = DirAccess.open(path)
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
 		while file_name != "":

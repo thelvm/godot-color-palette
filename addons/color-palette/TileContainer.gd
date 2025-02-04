@@ -1,4 +1,5 @@
-tool
+@tool
+class_name PaletteTileContainer
 extends FlexGridContainer
 
 signal grid_item_reordered(index_from, index_to)
