@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://kefeh2qihsjg"]
 
 [ext_resource type="Theme" uid="uid://dk6nn7yxepdih" path="res://addons/color-palette/utilities/EditorTheme.tres" id="1"]
-[ext_resource type="Script" uid="uid://cqn6hax6luxk2" path="res://addons/color-palette/ColorPaletteManager.gd" id="2"]
+[ext_resource type="Script" uid="uid://dqqn4iqk11gcv" path="res://addons/color-palette/ColorPaletteManager.gd" id="2"]
 [ext_resource type="Texture2D" uid="uid://bwajt3g5v3a3y" path="res://addons/color-palette/icons/Add.svg" id="3"]
 [ext_resource type="Texture2D" uid="uid://ckxcabhwbupuu" path="res://addons/color-palette/icons/Reload.svg" id="4"]
 [ext_resource type="Texture2D" uid="uid://24l4ev42u5wa" path="res://addons/color-palette/icons/Override.svg" id="5"]
@@ -65,50 +65,49 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="ColorEditorContainer" type="PanelContainer" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Margin" type="MarginContainer" parent="HBoxContainer/ColorEditorContainer"]
+[node name="ColorEditorContainer" type="MarginContainer" parent="HBoxContainer"]
 layout_mode = 2
 
-[node name="Scroll" type="ScrollContainer" parent="HBoxContainer/ColorEditorContainer/Margin"]
+[node name="Scroll" type="ScrollContainer" parent="HBoxContainer/ColorEditorContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="ColorPickerContainer" type="VBoxContainer" parent="HBoxContainer/ColorEditorContainer/Scroll"]
 layout_mode = 2
 
-[node name="ColorPickerContainer" type="VBoxContainer" parent="HBoxContainer/ColorEditorContainer/Margin/Scroll"]
-layout_mode = 2
-
-[node name="SelectedColorLabel" type="Label" parent="HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer"]
+[node name="SelectedColorLabel" type="Label" parent="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer"]
 layout_mode = 2
 text = "Select a palette or color..."
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer"]
 layout_mode = 2
 
-[node name="SelectedColorRect" type="ColorRect" parent="HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/HBoxContainer"]
+[node name="SelectedColorRect" type="ColorRect" parent="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/HBoxContainer"]
 layout_mode = 2
 text = ">"
 
-[node name="NewColorRect" type="ColorRect" parent="HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/HBoxContainer"]
+[node name="NewColorRect" type="ColorRect" parent="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="ApplyChanges" type="Button" parent="HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/HBoxContainer"]
+[node name="ApplyChanges" type="Button" parent="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/HBoxContainer"]
 layout_mode = 2
+tooltip_text = "Apply changes"
 theme = ExtResource("1")
 icon = ExtResource("5")
 
-[node name="AddNewColor" type="Button" parent="HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/HBoxContainer"]
+[node name="AddNewColor" type="Button" parent="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/HBoxContainer"]
 layout_mode = 2
+tooltip_text = "Add new Color"
 theme = ExtResource("1")
 icon = ExtResource("3")
 
-[node name="ColorPicker" type="ColorPicker" parent="HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer"]
+[node name="ColorPicker" type="ColorPicker" parent="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer"]
 layout_mode = 2
 presets_visible = false

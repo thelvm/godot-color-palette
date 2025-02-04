@@ -11,12 +11,12 @@ extends MarginContainer
 @onready var new_palette_button: Button = $HBoxContainer/ColorPaletteContainer/OptionsContainer/NewPalette
 @onready var open_palette_dir_button: Button = $HBoxContainer/ColorPaletteContainer/OptionsContainer/OpenPaletteDirectory
 # Color Editor
-@onready var color_picker: ColorPicker = $HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/ColorPicker
-@onready var color_preview_rect: ColorRect = $HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/HBoxContainer/SelectedColorRect
-@onready var color_preview_label: Label = $HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/SelectedColorLabel
-@onready var apply_color_changed_button: Button = $HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/HBoxContainer/ApplyChanges
-@onready var new_color_rect: ColorRect = $HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/HBoxContainer/NewColorRect
-@onready var new_color_button: Button = $HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/HBoxContainer/AddNewColor
+@onready var color_picker: ColorPicker = $HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/ColorPicker
+@onready var color_preview_rect: ColorRect = $HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/HBoxContainer/SelectedColorRect
+@onready var color_preview_label: Label = $HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/SelectedColorLabel
+@onready var apply_color_changed_button: Button = $HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/HBoxContainer/ApplyChanges
+@onready var new_color_rect: ColorRect = $HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/HBoxContainer/NewColorRect
+@onready var new_color_button: Button = $HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/HBoxContainer/AddNewColor
 
 var palette_container = preload("res://addons/color-palette/ColorPaletteContainer.tscn")
 
