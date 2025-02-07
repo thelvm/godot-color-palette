@@ -3,12 +3,10 @@ class_name Palette
 extends RefCounted
 
 var name: String = "Palette"
-var colors: Array[Color] = [] # of Color
-var comments: String = "":
-	set(new_value):
-		print_stack()
-		comments = new_value
-var path: String = ""
+var path: String
+var comments: String
+var colors: Array[Color]
+var columns: int
 
 
 func add_color(p_color : Color, p_index: int = -1) -> void:
@@ -45,7 +43,7 @@ func save():
 
 	var comment_lines: PackedStringArray = comments.split("\n", false)
 	for cl: String in comment_lines:
-		file.store_line("# " + cl)
+		file.store_line("#" + cl)
 	
 	for c: Color in colors:
 		var color_data: PackedStringArray = [
