@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cxwhehvsvk3eg"]
 
-[ext_resource type="Script" uid="uid://ckbehxavuss4k" path="res://addons/color-palette/TileContainer.gd" id="1"]
+[ext_resource type="Script" uid="uid://cjsw26uo3pee1" path="res://addons/color-palette/TileContainer.gd" id="1"]
 [ext_resource type="Theme" uid="uid://dk6nn7yxepdih" path="res://addons/color-palette/utilities/EditorTheme.tres" id="2"]
 [ext_resource type="Script" uid="uid://d3rwtocm20h1j" path="res://addons/color-palette/ColorPaletteContainer.gd" id="4"]
 
@@ -19,6 +19,8 @@ layout_mode = 2
 
 [node name="PaletteName" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+tooltip_text = "Path for the .gpl file"
+mouse_filter = 1
 text = "Palette Name"
 
 [node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]

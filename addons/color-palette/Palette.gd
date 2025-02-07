@@ -41,6 +41,7 @@ func save():
 
 	var file: FileAccess = FileAccess.open(path, FileAccess.WRITE)
 	file.store_line("GIMP Palette")
+	file.store_line("Name: " + name)
 
 	var comment_lines: PackedStringArray = comments.split("\n", false)
 	for cl: String in comment_lines:

@@ -50,8 +50,9 @@ func refresh_palettes():
 	for i in gpl_files:
 		palettes.append(PaletteImporter.import_gpl(i))
 	
-	for p in palettes:
+	for p: Palette in palettes:
 		var pc: ColorPaletteContainer = palette_container.instantiate()
+		pc.name = p.name
 		pc.palette = p
 		pc.undoredo = undoredo
 		if selected_palette:
@@ -93,9 +94,12 @@ func _apply_new_color_to_selected_palette() -> void:
 
 
 func _create_new_palette() -> void:
-	if new_palette_name_le.text.strip_edges().length() > 0:
+	var new_palette_name: String = new_palette_name_le.text.strip_edges()
+	
+	if new_palette_name.length() > 0:
 		var palette = Palette.new()
-		palette.path = palette_dir_le.text + new_palette_name_le.text + ".gpl"
+		palette.path = palette_dir_le.text + new_palette_name.to_lower().replace(" ", "_") + ".gpl"
+		palette.name = new_palette_name
 		palette.save()
 		refresh_palettes()
 	else:

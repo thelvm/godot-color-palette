@@ -31,7 +31,11 @@ static func import_gpl(path : String) -> Palette:
 					if name_end > name_start:
 						result.name = path.substr(name_start, name_end - name_start)
 			# Comments
+			elif line_number == 1 and line.begins_with("Name:"):
+				# Palette has a custom name
+				result.name = line.trim_prefix("Name:").strip_edges()
 			elif line.begins_with('#'):
+				# Line is a comment
 				comments += line.trim_prefix('#') + '\n'
 			elif not line.is_empty():
 				var matches: RegExMatch = color_line_regex.search(line)

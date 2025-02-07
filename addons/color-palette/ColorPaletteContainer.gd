@@ -25,7 +25,7 @@ func _ready():
 #	Base settings for all color rects are set in the color tile class
 	if palette:
 		name_label.text = palette.name
-		name_label.tooltip_text = palette.comments
+		name_label.tooltip_text = palette.path
 		for palette_color: PaletteColor in palette.colors:
 #			Color rect instance properties
 			var cri: ColorTile = ColorTile.new()
