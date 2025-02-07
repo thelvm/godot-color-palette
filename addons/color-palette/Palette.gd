@@ -3,9 +3,13 @@ class_name Palette
 extends RefCounted
 
 var name: String = "Palette"
-var colors: Array = [] # of Color
-var comments: String = ""
+var colors: Array[Color] = [] # of Color
+var comments: String = "":
+	set(new_value):
+		print_stack()
+		comments = new_value
 var path: String = ""
+
 
 func add_color(p_color : Color, p_index: int = -1) -> void:
 	if p_index != -1:
@@ -22,14 +26,9 @@ func reorder_color(p_index_from: int, p_index_to: int):
 	if p_index_from == p_index_to:
 		return
 	
-	var moving_color = colors[p_index_from]
-	if p_index_from < p_index_to:
-		colors.remove_at(p_index_from)
-		colors.insert(p_index_to, moving_color)
-	
-	if p_index_from > p_index_to:
-		colors.remove_at(p_index_from)
-		colors.insert(p_index_to, moving_color)
+	var moving_color: Color = colors[p_index_from]
+	colors.remove_at(p_index_from)
+	colors.insert(p_index_to, moving_color)
 
 
 func remove_color(p_index: int):
@@ -44,11 +43,11 @@ func save():
 	var file: FileAccess = FileAccess.open(path, FileAccess.WRITE)
 	file.store_line("GIMP Palette")
 
-	var comment_lines = comments.split("\n")
-	for cl in comment_lines:
+	var comment_lines: PackedStringArray = comments.split("\n", false)
+	for cl: String in comment_lines:
 		file.store_line("# " + cl)
 	
-	for c in colors:
+	for c: Color in colors:
 		var color_data: PackedStringArray = [
 			str(c.r8), 
 			str(c.g8), 
