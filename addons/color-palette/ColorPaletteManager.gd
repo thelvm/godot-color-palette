@@ -4,7 +4,7 @@ extends MarginContainer
 
 # Palette list
 @onready var refresh_list_button: Button = $HBoxContainer/ColorPaletteContainer/OptionsContainer/RefreshList
-@onready var palette_list: VBoxContainer = $HBoxContainer/ColorPaletteContainer/PaletteListScroll/PaletteList
+@onready var palette_list: TabContainer = $HBoxContainer/ColorPaletteContainer/PaletteListScroll/PaletteList
 # Options
 @onready var palette_dir_le: LineEdit = $HBoxContainer/ColorPaletteContainer/OptionsContainer/PaletteDirectory
 @onready var new_palette_name_le: LineEdit = $HBoxContainer/ColorPaletteContainer/OptionsContainer/NewPaletteName
@@ -61,10 +61,17 @@ func refresh_palettes():
 		pc.palette_color_selected.connect(_on_palette_color_selected)
 		pc.container_selected.connect(_on_palette_container_selected)
 		palette_list.add_child(pc)
+	
+	# Selects the correct tab
+	if selected_palette:
+		print("Selected: " + selected_palette.name)
+		for n in palette_list.get_children():
+			if n.name == selected_palette.name:
+				palette_list.current_tab = n.get_index()
 
 
 func _on_palette_color_selected(palette: Palette, index: int):
-	color_preview_label.text = ("%s (%s)" % [palette.name, palette.colors[index].name])
+	color_preview_label.text = ("%s\n%s" % [palette.name, palette.colors[index].name])
 	color_preview_rect.color = palette.colors[index].color
 	color_picker.color = palette.colors[index].color
 	new_color_rect.color = palette.colors[index].color

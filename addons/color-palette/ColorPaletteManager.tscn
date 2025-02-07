@@ -34,6 +34,7 @@ text = "Palette Directory"
 layout_mode = 2
 text = "res://addons/color-palette/_palettes/"
 placeholder_text = "Palette Directory"
+expand_to_text_length = true
 
 [node name="OpenPaletteDirectory" type="Button" parent="HBoxContainer/ColorPaletteContainer/OptionsContainer"]
 layout_mode = 2
@@ -46,6 +47,8 @@ size_flags_horizontal = 3
 [node name="NewPaletteName" type="LineEdit" parent="HBoxContainer/ColorPaletteContainer/OptionsContainer"]
 layout_mode = 2
 placeholder_text = "New Palette Name"
+expand_to_text_length = true
+select_all_on_focus = true
 
 [node name="NewPalette" type="Button" parent="HBoxContainer/ColorPaletteContainer/OptionsContainer"]
 layout_mode = 2
@@ -60,10 +63,11 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="PaletteList" type="VBoxContainer" parent="HBoxContainer/ColorPaletteContainer/PaletteListScroll"]
+[node name="PaletteList" type="TabContainer" parent="HBoxContainer/ColorPaletteContainer/PaletteListScroll"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+current_tab = 0
 
 [node name="ColorEditorContainer" type="MarginContainer" parent="HBoxContainer"]
 layout_mode = 2
@@ -110,4 +114,7 @@ icon = ExtResource("3")
 
 [node name="ColorPicker" type="ColorPicker" parent="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer"]
 layout_mode = 2
+edit_alpha = false
+picker_shape = 4
+can_add_swatches = false
 presets_visible = false
