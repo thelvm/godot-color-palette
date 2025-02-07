@@ -12,11 +12,11 @@ static func import_gpl(path : String) -> Palette:
 	var file: FileAccess
 	if FileAccess.file_exists(path):
 		file = FileAccess.open(path, FileAccess.READ)
-		var text = file.get_as_text()
-		var lines = text.split('\n')
+		var text: String = file.get_as_text()
+		var lines: PackedStringArray = text.split('\n')
 		var line_number := 0
 		var comments := ""
-		for line in lines:
+		for line: String in lines:
 			line = line.lstrip(" ")
 			# Check if valid Gimp Palette Library file
 			if line_number == 0:
@@ -26,8 +26,8 @@ static func import_gpl(path : String) -> Palette:
 				else:
 					result = Palette.new()
 					result.path = path
-					var name_start = path.rfind('/') + 1
-					var name_end = path.rfind('.')
+					var name_start: int = path.rfind('/') + 1
+					var name_end: int = path.rfind('.')
 					if name_end > name_start:
 						result.name = path.substr(name_start, name_end - name_start)
 			# Comments
@@ -39,7 +39,7 @@ static func import_gpl(path : String) -> Palette:
 					var red: float = matches.get_string("red").to_float() / 255.0
 					var green: float = matches.get_string("green").to_float() / 255.0
 					var blue: float = matches.get_string("blue").to_float() / 255.0
-					var color = Color(red, green, blue)
+					var color: Color = Color(red, green, blue)
 					result.add_color(color)
 				else:
 					push_error("Unable to parse line %s with content: %s" % [line_number + 1, line])
@@ -56,14 +56,14 @@ static func import_gpl(path : String) -> Palette:
 
 
 # Get all gpl files in a path
-static func get_gpl_files(path) -> Array:
-	var files = []
+static func get_gpl_files(path: String) -> Array[String]:
+	var files: Array[String] = []
 
 	var dir: DirAccess
 	if DirAccess.dir_exists_absolute(path):
 		dir = DirAccess.open(path)
 		dir.list_dir_begin()
-		var file_name = dir.get_next()
+		var file_name: String = dir.get_next()
 		while file_name != "":
 			if !dir.current_is_dir() and file_name.ends_with(".gpl"):
 				files.append(path + file_name)

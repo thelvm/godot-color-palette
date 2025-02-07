@@ -2,10 +2,10 @@
 class_name ColorTile
 extends ColorRect
 
-signal tile_deleted(index)
-signal tile_selected(index)
+signal tile_deleted(index: int)
+signal tile_selected(index: int)
 
-@onready var parent = get_parent()
+@onready var parent: PaletteTileContainer = get_parent() as PaletteTileContainer
 
 var dragging: bool = false
 

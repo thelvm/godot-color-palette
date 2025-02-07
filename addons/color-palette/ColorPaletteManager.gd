@@ -80,11 +80,11 @@ func _on_palette_color_selected(palette: Palette, index: int):
 
 func _apply_new_color_to_selected_palette() -> void:
 #	Check that we can actually apply before doing so
-	var size = selected_palette.colors.size()
+	var size: int = selected_palette.colors.size()
 	if size == 0 or selected_color_index >= size:
 		return
 		
-	var new_color = color_picker.color
+	var new_color: Color = color_picker.color
 	var original_color = selected_palette.colors[selected_color_index]
 	
 	undoredo.create_action("Change Palette Color")
@@ -109,7 +109,7 @@ func _create_new_palette() -> void:
 
 
 func _on_palette_container_selected(container: Control) -> void:
-	for pc in palette_list.get_children():
+	for pc: ColorPaletteContainer in palette_list.get_children():
 		if pc != container:
 			pc.selected = false
 	

@@ -1,8 +1,8 @@
 @tool
 class_name PaletteTileContainer
-extends FlexGridContainer
+extends HFlowContainer
 
-signal grid_item_reordered(index_from, index_to)
+signal grid_item_reordered(index_from: int, index_to: int)
 
 var dragging: ColorRect = null
 var drag_start_index = -1
@@ -10,11 +10,11 @@ var drag_start_index = -1
 func _gui_input(event):
 	if event is InputEventMouseMotion and dragging != null:
 #		Move the color rect as the user drags it for a live preview
-		var mp = event.position
-		for c in get_children():
-			c = c as ColorRect
-			if c.get_rect().has_point(mp):
-				move_child(dragging, c.get_index())
+		var mouse_position: Vector2 = (event as InputEventMouseMotion).position
+		for c: Node in get_children():
+			if c is ColorRect:
+				if (c as ColorRect).get_rect().has_point(mouse_position):
+					move_child(dragging, c.get_index())
 		
 	
 #	When dragging finished
@@ -22,8 +22,5 @@ func _gui_input(event):
 			dragging != null and
 			event.get_button_index() == 1 and
 			event.is_pressed() == false):
-				emit_signal("grid_item_reordered", 
-						drag_start_index, 
-						dragging.get_index())
-								
+				grid_item_reordered.emit(drag_start_index, dragging.get_index())
 				dragging = null

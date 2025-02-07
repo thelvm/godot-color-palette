@@ -28,20 +28,18 @@ func _ready():
 	if palette:
 		name_label.text = palette.name
 		name_label.tooltip_text = palette.comments
-		for c in palette.colors:
+		for c: Color in palette.colors:
 #			Color rect instance properties
 			var cri: ColorTile = ColorTile.new()
 			cri.color = c
-			# cri.connect("tile_selected", self, "_on_tile_selected")
 			cri.tile_selected.connect(_on_tile_selected)
-			# cri.connect("tile_deleted", self, "_on_tile_deleted")
 			cri.tile_deleted.connect(_on_tile_deleted)
 			grid.add_child(cri)
 
 func load_to_picker():
 	var new_picker_presets: PackedColorArray
 	
-	for c in palette.colors:
+	for c: Color in palette.colors:
 		new_picker_presets.append(c)
 	
 #	Hack?
@@ -59,14 +57,14 @@ func update_from_picker():
 		.get_project_metadata("color_picker", "presets")
 	
 	palette.colors.clear()
-	for c in colors:
+	for c: Color in colors:
 		palette.add_color(c)
 	
 	palette.save()
 	
 	ep.free()
 	
-	emit_signal("palette_updated")
+	palette_updated.emit()
 
 
 func _grid_item_reordered(p_index_from: int, p_index_to: int) -> void:
@@ -89,7 +87,7 @@ func _grid_item_reordered(p_index_from: int, p_index_to: int) -> void:
 
 # Bubble the event up the tree
 func _on_tile_selected(index):
-	emit_signal("palette_color_selected", palette, index)
+	palette_color_selected.emit(palette, index)
 
 
 func _on_tile_deleted(index):	
@@ -121,7 +119,7 @@ func set_selected(value: bool) -> void:
 		var sb: StyleBoxFlat = get_theme_stylebox("panel").duplicate()
 		sb.bg_color = Color(0.15, 0.17, 0.23)
 		add_theme_stylebox_override("panel", sb)
-	
+
 
 func _gui_input(event):
 	if (event is InputEventMouseButton and
