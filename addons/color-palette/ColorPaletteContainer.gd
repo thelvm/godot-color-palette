@@ -18,9 +18,7 @@ var selected: bool = false: set = set_selected
 
 
 func _ready():
-	# btn_load_to_picker.connect("pressed", self, "load_to_picker")
 	btn_load_to_picker.pressed.connect(load_to_picker)
-	# btn_update_from_picker.connect("pressed", self, "update_from_picker")
 	btn_update_from_picker.pressed.connect(update_from_picker)
 	grid.grid_item_reordered.connect(_grid_item_reordered)
 	

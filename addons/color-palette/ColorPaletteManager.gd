@@ -28,17 +28,11 @@ var selected_color_index: int
 
 func _ready():
 	refresh_palettes()
-	# refresh_list_button.connect("pressed", self, "refresh_palettes")
 	refresh_list_button.pressed.connect(refresh_palettes)
-	# apply_color_changed_button.connect("pressed", self, "_apply_new_color_to_selected_palette")
 	apply_color_changed_button.pressed.connect(_apply_new_color_to_selected_palette)
-	# new_palette_button.connect("pressed", self, "_create_new_palette")
 	new_palette_button.pressed.connect(_create_new_palette)
-	# color_picker.connect("color_changed", new_color_rect, "set_frame_color")
 	color_picker.color_changed.connect(func(new_color): new_color_rect.color = new_color)
-	# new_color_button.connect("pressed", self, "_add_color_to_selected_palette")
 	new_color_button.pressed.connect(_add_color_to_selected_palette)
-	# open_palette_dir_button.connect("pressed", self, "_open_dir_in_file_manager")
 	open_palette_dir_button.pressed.connect(_open_dir_in_file_manager)
 
 # Clear the palette list, load the gpl files and populate the list again
