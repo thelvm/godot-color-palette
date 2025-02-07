@@ -26,10 +26,10 @@ func _ready():
 	if palette:
 		name_label.text = palette.name
 		name_label.tooltip_text = palette.comments
-		for c: Color in palette.colors:
+		for palette_color: PaletteColor in palette.colors:
 #			Color rect instance properties
 			var cri: ColorTile = ColorTile.new()
-			cri.color = c
+			cri.palette_color = palette_color
 			cri.tile_selected.connect(_on_tile_selected)
 			cri.tile_deleted.connect(_on_tile_deleted)
 			grid.add_child(cri)
@@ -37,8 +37,8 @@ func _ready():
 func load_to_picker():
 	var new_picker_presets: PackedColorArray
 	
-	for c: Color in palette.colors:
-		new_picker_presets.append(c)
+	for palette_color: PaletteColor in palette.colors:
+		new_picker_presets.append(palette_color.color)
 	
 #	Hack?
 	var ep = EditorPlugin.new()

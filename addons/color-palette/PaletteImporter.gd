@@ -5,9 +5,9 @@ extends RefCounted
 # Adapted from Github -> Orama-Interactive/Pixelorama/src/Autoload/Import.gd
 static func import_gpl(path : String) -> Palette:
 	var color_line_regex = RegEx.new()
-	color_line_regex.compile("(?<red>[0-9]{1,3})[ \t]+(?<green>[0-9]{1,3})[ \t]+(?<blue>[0-9]{1,3})")
+	color_line_regex.compile("(?<red>[0-9]{1,3})\\s+(?<green>[0-9]{1,3})\\s+(?<blue>[0-9]{1,3})(?:\\s+(?<name>.+))")
 
-	var result : Palette = null
+	var result: Palette = null
 
 	var file: FileAccess
 	if FileAccess.file_exists(path):
@@ -34,13 +34,14 @@ static func import_gpl(path : String) -> Palette:
 			elif line.begins_with('#'):
 				comments += line.trim_prefix('#') + '\n'
 			elif not line.is_empty():
-				var matches = color_line_regex.search(line)
+				var matches: RegExMatch = color_line_regex.search(line)
 				if matches:
 					var red: float = matches.get_string("red").to_float() / 255.0
 					var green: float = matches.get_string("green").to_float() / 255.0
 					var blue: float = matches.get_string("blue").to_float() / 255.0
 					var color: Color = Color(red, green, blue)
-					result.add_color(color)
+					var color_name: String = matches.get_string("name")
+					result.add_color(color, color_name)
 				else:
 					push_error("Unable to parse line %s with content: %s" % [line_number + 1, line])
 

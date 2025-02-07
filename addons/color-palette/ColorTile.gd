@@ -8,6 +8,10 @@ signal tile_selected(index: int)
 @onready var parent: PaletteTileContainer = get_parent() as PaletteTileContainer
 
 var dragging: bool = false
+var palette_color: PaletteColor:
+	set(new_palette_color):
+		palette_color = new_palette_color
+		color = new_palette_color.color
 
 func _ready():
 	custom_minimum_size = Vector2(30,30)
@@ -26,3 +30,8 @@ func _gui_input(event):
 			accept_event()
 			return
 		
+
+
+func set_color(new_color: Color) -> void:
+	color = new_color
+	palette_color.color = color

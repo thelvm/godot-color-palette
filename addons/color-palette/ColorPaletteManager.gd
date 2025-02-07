@@ -20,7 +20,7 @@ extends MarginContainer
 
 var palette_container = preload("res://addons/color-palette/ColorPaletteContainer.tscn")
 
-var palettes: Array # of Palette
+var palettes: Array[Palette]
 var undoredo: EditorUndoRedoManager # passed from EditorPlugin
 
 var selected_palette: Palette
@@ -63,10 +63,10 @@ func refresh_palettes():
 
 
 func _on_palette_color_selected(palette: Palette, index: int):
-	color_preview_label.text = ("%s (Color #%s)" % [palette.name, index+1])
-	color_preview_rect.color = palette.colors[index]
-	color_picker.color = palette.colors[index]
-	new_color_rect.color = palette.colors[index]
+	color_preview_label.text = ("%s (%s)" % [palette.name, palette.colors[index].name])
+	color_preview_rect.color = palette.colors[index].color
+	color_picker.color = palette.colors[index].color
+	new_color_rect.color = palette.colors[index].color
 	
 	selected_palette = palette
 	selected_color_index = index
