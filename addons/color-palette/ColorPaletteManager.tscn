@@ -30,13 +30,15 @@ layout_mode = 2
 layout_mode = 2
 text = "Palette Directory"
 
-[node name="PaletteDirectory" type="LineEdit" parent="HBoxContainer/ColorPaletteContainer/OptionsContainer"]
+[node name="PaletteDirectoryLineEdit" type="LineEdit" parent="HBoxContainer/ColorPaletteContainer/OptionsContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "res://addons/color-palette/_palettes/"
 placeholder_text = "Palette Directory"
 expand_to_text_length = true
 
-[node name="OpenPaletteDirectory" type="Button" parent="HBoxContainer/ColorPaletteContainer/OptionsContainer"]
+[node name="OpenPaletteDirectoryButton" type="Button" parent="HBoxContainer/ColorPaletteContainer/OptionsContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 icon = ExtResource("6")
 
@@ -44,17 +46,20 @@ icon = ExtResource("6")
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="NewPaletteName" type="LineEdit" parent="HBoxContainer/ColorPaletteContainer/OptionsContainer"]
+[node name="NewPaletteNameLineEdit" type="LineEdit" parent="HBoxContainer/ColorPaletteContainer/OptionsContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 placeholder_text = "New Palette Name"
 expand_to_text_length = true
 select_all_on_focus = true
 
-[node name="NewPalette" type="Button" parent="HBoxContainer/ColorPaletteContainer/OptionsContainer"]
+[node name="NewPaletteButton" type="Button" parent="HBoxContainer/ColorPaletteContainer/OptionsContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 icon = ExtResource("3")
 
-[node name="RefreshList" type="Button" parent="HBoxContainer/ColorPaletteContainer/OptionsContainer"]
+[node name="RefreshListButton" type="Button" parent="HBoxContainer/ColorPaletteContainer/OptionsContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 icon = ExtResource("4")
 
@@ -64,6 +69,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="PaletteList" type="TabContainer" parent="HBoxContainer/ColorPaletteContainer/PaletteListScroll"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -80,6 +86,7 @@ horizontal_scroll_mode = 0
 layout_mode = 2
 
 [node name="SelectedColorLabel" type="Label" parent="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Select a palette or color..."
 
@@ -87,6 +94,7 @@ text = "Select a palette or color..."
 layout_mode = 2
 
 [node name="SelectedColorRect" type="ColorRect" parent="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -96,23 +104,27 @@ layout_mode = 2
 text = ">"
 
 [node name="NewColorRect" type="ColorRect" parent="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="ApplyChanges" type="Button" parent="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/HBoxContainer"]
+[node name="ApplyChangesButton" type="Button" parent="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Apply changes"
 theme = ExtResource("1")
 icon = ExtResource("5")
 
-[node name="AddNewColor" type="Button" parent="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/HBoxContainer"]
+[node name="AddNewColorButton" type="Button" parent="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Add new Color"
 theme = ExtResource("1")
 icon = ExtResource("3")
 
 [node name="ColorPicker" type="ColorPicker" parent="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 edit_alpha = false
 picker_shape = 4

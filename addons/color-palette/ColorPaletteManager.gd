@@ -3,22 +3,22 @@ class_name ColorPaletteManager
 extends MarginContainer
 
 # Palette list
-@onready var refresh_list_button: Button = $HBoxContainer/ColorPaletteContainer/OptionsContainer/RefreshList
-@onready var palette_list: TabContainer = $HBoxContainer/ColorPaletteContainer/PaletteListScroll/PaletteList
+@onready var refresh_list_button: Button = %RefreshListButton
+@onready var palette_list: TabContainer = %PaletteList
 # Options
-@onready var palette_dir_le: LineEdit = $HBoxContainer/ColorPaletteContainer/OptionsContainer/PaletteDirectory
-@onready var new_palette_name_le: LineEdit = $HBoxContainer/ColorPaletteContainer/OptionsContainer/NewPaletteName
-@onready var new_palette_button: Button = $HBoxContainer/ColorPaletteContainer/OptionsContainer/NewPalette
-@onready var open_palette_dir_button: Button = $HBoxContainer/ColorPaletteContainer/OptionsContainer/OpenPaletteDirectory
+@onready var palette_dir_le: LineEdit = %PaletteDirectoryLineEdit
+@onready var new_palette_name_le: LineEdit = %NewPaletteNameLineEdit
+@onready var new_palette_button: Button = %NewPaletteButton
+@onready var open_palette_dir_button: Button = %OpenPaletteDirectoryButton
 # Color Editor
-@onready var color_picker: ColorPicker = $HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/ColorPicker
-@onready var color_preview_rect: ColorRect = $HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/HBoxContainer/SelectedColorRect
-@onready var color_preview_label: Label = $HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/SelectedColorLabel
-@onready var apply_color_changed_button: Button = $HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/HBoxContainer/ApplyChanges
-@onready var new_color_rect: ColorRect = $HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/HBoxContainer/NewColorRect
-@onready var new_color_button: Button = $HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/HBoxContainer/AddNewColor
+@onready var color_picker: ColorPicker = %ColorPicker
+@onready var color_preview_rect: ColorRect = %SelectedColorRect
+@onready var color_preview_label: Label = %SelectedColorLabel
+@onready var apply_color_changed_button: Button = %ApplyChangesButton
+@onready var new_color_rect: ColorRect = %NewColorRect
+@onready var new_color_button: Button = %AddNewColorButton
 
-var palette_container = preload("res://addons/color-palette/ColorPaletteContainer.tscn")
+var palette_container: PackedScene = preload("res://addons/color-palette/ColorPaletteContainer.tscn")
 
 var palettes: Array[Palette]
 var undoredo: EditorUndoRedoManager # passed from EditorPlugin
