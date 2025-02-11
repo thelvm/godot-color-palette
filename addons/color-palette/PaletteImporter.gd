@@ -5,7 +5,7 @@ extends RefCounted
 # Adapted from Github -> Orama-Interactive/Pixelorama/src/Autoload/Import.gd
 static func import_gpl(path : String) -> Palette:
 	var color_line_regex = RegEx.new()
-	color_line_regex.compile("(?<red>[0-9]{1,3})\\s+(?<green>[0-9]{1,3})\\s+(?<blue>[0-9]{1,3})(?:\\s+(?<name>.+))")
+	color_line_regex.compile("(?<red>[0-9]{1,3})\\s+(?<green>[0-9]{1,3})\\s+(?<blue>[0-9]{1,3})(?:\\s+(?<name>.+))?")
 
 	var result: Palette = null
 
