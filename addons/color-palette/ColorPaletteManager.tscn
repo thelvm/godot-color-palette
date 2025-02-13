@@ -1,6 +1,5 @@
-[gd_scene load_steps=7 format=3 uid="uid://kefeh2qihsjg"]
+[gd_scene load_steps=6 format=3 uid="uid://kefeh2qihsjg"]
 
-[ext_resource type="Theme" uid="uid://dk6nn7yxepdih" path="res://addons/color-palette/utilities/EditorTheme.tres" id="1"]
 [ext_resource type="Script" uid="uid://dqqn4iqk11gcv" path="res://addons/color-palette/ColorPaletteManager.gd" id="2"]
 [ext_resource type="Texture2D" uid="uid://bwajt3g5v3a3y" path="res://addons/color-palette/icons/Add.svg" id="3"]
 [ext_resource type="Texture2D" uid="uid://ckxcabhwbupuu" path="res://addons/color-palette/icons/Reload.svg" id="4"]
@@ -11,7 +10,8 @@
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = ExtResource("1")
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("2")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -63,12 +63,7 @@ unique_name_in_owner = true
 layout_mode = 2
 icon = ExtResource("4")
 
-[node name="PaletteListScroll" type="ScrollContainer" parent="HBoxContainer/ColorPaletteContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="PaletteList" type="TabContainer" parent="HBoxContainer/ColorPaletteContainer/PaletteListScroll"]
+[node name="PaletteList" type="TabContainer" parent="HBoxContainer/ColorPaletteContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -86,6 +81,8 @@ horizontal_scroll_mode = 0
 
 [node name="ColorPickerContainer" type="VBoxContainer" parent="HBoxContainer/ColorEditorContainer/Scroll"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="SelectedColorLabel" type="Label" parent="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer"]
 unique_name_in_owner = true
@@ -122,21 +119,18 @@ size_flags_vertical = 3
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Apply changes"
-theme = ExtResource("1")
 icon = ExtResource("5")
 
 [node name="AddNewColorButton" type="Button" parent="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Add new Color"
-theme = ExtResource("1")
 icon = ExtResource("3")
 
 [node name="ColorPicker" type="ColorPicker" parent="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-edit_alpha = false
-picker_shape = 4
 can_add_swatches = false
 presets_visible = false
+
 [connection signal="text_submitted" from="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/ColorNameLineEdit" to="." method="_on_color_name_line_edit_text_submitted"]

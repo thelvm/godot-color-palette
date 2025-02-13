@@ -7,10 +7,10 @@ signal palette_color_selected(palette, color_index)
 signal palette_color_deleted(palette, color_index)
 signal container_selected(container_object)
 
-@onready var btn_load_to_picker: Button = $MarginContainer/VBoxContainer/HBoxContainer/BtnLoadToPicker
-@onready var btn_update_from_picker: Button = $MarginContainer/VBoxContainer/HBoxContainer/BtnUpdateFromPicker
-@onready var name_label: Label = $MarginContainer/VBoxContainer/HBoxContainer/PaletteName
-@onready var grid: PaletteTileContainer = $MarginContainer/VBoxContainer/PaletteTileContainer/TileContainer as PaletteTileContainer
+@onready var btn_load_to_picker: Button = %BtnLoadToPicker
+@onready var btn_update_from_picker: Button = %BtnUpdateFromPicker
+@onready var name_label: Label = %PaletteName
+@onready var grid: PaletteTileContainer = %TileContainer as PaletteTileContainer
 
 var palette: Palette
 var undoredo: EditorUndoRedoManager
@@ -109,14 +109,7 @@ func _on_tile_deleted(index):
 func set_selected(value: bool) -> void:
 	selected = value
 	if selected:
-		var sb: StyleBoxFlat = get_theme_stylebox("panel").duplicate()
-		sb.bg_color = Color("#2c3141")
-		add_theme_stylebox_override("panel", sb)
 		container_selected.emit(self)
-	else:
-		var sb: StyleBoxFlat = get_theme_stylebox("panel").duplicate()
-		sb.bg_color = Color(0.15, 0.17, 0.23)
-		add_theme_stylebox_override("panel", sb)
 
 
 func _on_focus_entered() -> void:
