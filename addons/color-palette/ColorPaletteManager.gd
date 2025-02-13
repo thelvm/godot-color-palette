@@ -14,6 +14,7 @@ extends MarginContainer
 @onready var color_picker: ColorPicker = %ColorPicker
 @onready var color_preview_rect: ColorRect = %SelectedColorRect
 @onready var color_preview_label: Label = %SelectedColorLabel
+@onready var color_name_line_edit: LineEdit = %ColorNameLineEdit
 @onready var apply_color_changed_button: Button = %ApplyChangesButton
 @onready var new_color_rect: ColorRect = %NewColorRect
 @onready var new_color_button: Button = %AddNewColorButton
@@ -64,14 +65,14 @@ func refresh_palettes():
 	
 	# Selects the correct tab
 	if selected_palette:
-		print("Selected: " + selected_palette.name)
 		for n in palette_list.get_children():
 			if n.name == selected_palette.name:
 				palette_list.current_tab = n.get_index()
 
 
 func _on_palette_color_selected(palette: Palette, index: int):
-	color_preview_label.text = ("%s\n%s" % [palette.name, palette.colors[index].name])
+	color_preview_label.text = palette.name
+	color_name_line_edit.text = palette.colors[index].name
 	color_preview_rect.color = palette.colors[index].color
 	color_picker.color = palette.colors[index].color
 	new_color_rect.color = palette.colors[index].color
@@ -87,14 +88,17 @@ func _apply_new_color_to_selected_palette() -> void:
 		return
 		
 	var new_color: Color = color_picker.color
-	var original_color = selected_palette.colors[selected_color_index]
+	var new_name: String = color_name_line_edit.text
+	
+	var original_color = selected_palette.colors[selected_color_index].color
+	var original_name = selected_palette.colors[selected_color_index].name
 	
 	undoredo.create_action("Change Palette Color")
-	undoredo.add_do_method(selected_palette, "change_color", selected_color_index, new_color)
+	undoredo.add_do_method(selected_palette, "change_color", selected_color_index, new_color, new_name)
 	undoredo.add_do_method(selected_palette, "save")
 	undoredo.add_do_method(self, "refresh_palettes")
 	
-	undoredo.add_undo_method(selected_palette, "change_color", selected_color_index, original_color)
+	undoredo.add_undo_method(selected_palette, "change_color", selected_color_index, original_color, original_name)
 	undoredo.add_undo_method(selected_palette, "save")
 	undoredo.add_undo_method(self, "refresh_palettes")
 	undoredo.commit_action()
@@ -120,12 +124,13 @@ func _on_palette_container_selected(container: Control) -> void:
 	
 	selected_palette = container.palette
 	selected_color_index = 0
-	color_preview_label.text = ("%s (No Color Selected)" % selected_palette.name)
+	color_preview_label.text = selected_palette.name
+	color_name_line_edit.clear()
 
 
 func _add_color_to_selected_palette() -> void:
 	if selected_palette != null:
-		selected_palette.add_color(color_picker.color)
+		selected_palette.add_color(color_picker.color, color_name_line_edit.text)
 		selected_palette.save()
 		refresh_palettes()
 
@@ -136,3 +141,22 @@ func _open_dir_in_file_manager():
 		OS.shell_open(path)
 	else:
 		push_error("Invalid directory.")
+
+
+func _on_color_name_line_edit_text_submitted(new_name: String) -> void:
+	var previous_name: String = selected_palette.colors[selected_color_index].name
+	
+	undoredo.create_action("Changed color name to " + new_name)
+	
+	undoredo.add_do_property(selected_palette.colors[selected_color_index], "name", new_name)
+	undoredo.add_undo_property(selected_palette.colors[selected_color_index], "name", previous_name)
+	
+	undoredo.add_do_method(selected_palette, "save")
+	undoredo.add_undo_method(selected_palette, "save")
+	
+	undoredo.add_do_method(self, "refresh_palettes")
+	undoredo.add_undo_method(self, "refresh_palettes")
+	
+	undoredo.commit_action()
+	
+	color_name_line_edit.release_focus()

@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://d3rwtocm20h1j" path="res://addons/color-palette/ColorPaletteContainer.gd" id="4"]
 
 [node name="ColorPaletteContainer" type="PanelContainer"]
+focus_mode = 2
 theme = ExtResource("2")
 script = ExtResource("4")
 
@@ -43,6 +44,8 @@ mouse_filter = 1
 [node name="PaletteTileContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="TileContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/PaletteTileContainer"]
+[node name="TileContainer" type="HFlowContainer" parent="MarginContainer/VBoxContainer/PaletteTileContainer"]
 layout_mode = 2
 script = ExtResource("1")
+
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]

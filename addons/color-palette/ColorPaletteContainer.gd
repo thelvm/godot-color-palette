@@ -91,7 +91,7 @@ func _on_tile_selected(index):
 func _on_tile_deleted(index):	
 	var original_color = palette.colors[index]
 	
-	undoredo.create_action("Delete Color %s from Palette %s" % [original_color.to_html(), palette.name])
+	undoredo.create_action("Delete Color %s from Palette %s" % [original_color.color.to_html(), palette.name])
 	
 #	To do, move from "from" to "to"
 	undoredo.add_do_method(palette, "remove_color", index)
@@ -119,8 +119,5 @@ func set_selected(value: bool) -> void:
 		add_theme_stylebox_override("panel", sb)
 
 
-func _gui_input(event):
-	if (event is InputEventMouseButton and
-			event.get_button_index() == 1 and
-			event.is_pressed()):
-		self.selected = true
+func _on_focus_entered() -> void:
+	selected = true

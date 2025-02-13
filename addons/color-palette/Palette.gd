@@ -10,6 +10,7 @@ var columns: int
 
 
 func add_color(p_color : Color, name: String = "", p_index: int = -1) -> void:
+	# TODO add undoredo
 	var palette_color: PaletteColor = PaletteColor.new(p_color, name)
 	if p_index != -1:
 		colors.insert(p_index, palette_color)
@@ -17,8 +18,9 @@ func add_color(p_color : Color, name: String = "", p_index: int = -1) -> void:
 		colors.append(palette_color)
 
 
-func change_color(p_index: int, p_color: Color) -> void:
+func change_color(p_index: int, p_color: Color, p_name: String) -> void:
 	colors[p_index].color = p_color
+	colors[p_index].name = p_name
 
 
 func reorder_color(p_index_from: int, p_index_to: int):
