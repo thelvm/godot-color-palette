@@ -9,7 +9,7 @@ signal container_selected(container_object)
 
 @onready var btn_load_to_picker: Button = %BtnLoadToPicker
 @onready var btn_update_from_picker: Button = %BtnUpdateFromPicker
-@onready var name_label: Label = %PaletteName
+@onready var palette_name_line_edit: LineEdit = %PaletteNameLineEdit
 @onready var grid: PaletteTileContainer = %TileContainer as PaletteTileContainer
 
 var palette: Palette
@@ -24,8 +24,8 @@ func _ready():
 	
 #	Base settings for all color rects are set in the color tile class
 	if palette:
-		name_label.text = palette.name
-		name_label.tooltip_text = palette.path
+		palette_name_line_edit.text = palette.name
+		palette_name_line_edit.tooltip_text = palette.path
 		for palette_color: PaletteColor in palette.colors:
 #			Color rect instance properties
 			var cri: ColorTile = ColorTile.new()
@@ -114,3 +114,12 @@ func set_selected(value: bool) -> void:
 
 func _on_focus_entered() -> void:
 	selected = true
+
+
+func _on_palette_name_text_submitted(new_name: String) -> void:
+	var stripped_name: String = new_name.strip_edges()
+	if not stripped_name.is_empty():
+		palette.name = stripped_name
+		palette.save()
+		palette_updated.emit()
+		

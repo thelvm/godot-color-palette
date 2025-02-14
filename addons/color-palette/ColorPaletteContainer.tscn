@@ -29,12 +29,12 @@ layout_mode = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="PaletteName" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="PaletteNameLineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-tooltip_text = "Path for the .gpl file"
-mouse_filter = 1
-text = "Palette Name"
+placeholder_text = "Palette Name"
+expand_to_text_length = true
+flat = true
 
 [node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -81,3 +81,4 @@ layout_mode = 2
 script = ExtResource("1")
 
 [connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
+[connection signal="text_submitted" from="MarginContainer/VBoxContainer/HBoxContainer/PaletteNameLineEdit" to="." method="_on_palette_name_text_submitted"]
