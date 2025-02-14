@@ -1,8 +1,9 @@
 # Godot Color Palette Plugin
 Manage color palettes from within Godot to make coloring and theming easier!
-This is an upgrade of the Godot 3 addon by EricEzaM found [here](https://github.com/EricEzaM/godot-color-palette)
 
 ![Sample](sample.png "Sample")
+
+This project is a fork of [godot-color-palette](https://github.com/EricEzaM/godot-color-palette) by EricEzaM
 
 # Quick Reference Docs
 
