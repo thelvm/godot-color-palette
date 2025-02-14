@@ -25,7 +25,3 @@ gdscript/warnings/unsafe_call_argument=1
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/color-palette/plugin.cfg")
-
-[rendering]
-
-environment/defaults/default_environment="res://default_env.tres"
