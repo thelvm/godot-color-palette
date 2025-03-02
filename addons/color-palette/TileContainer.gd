@@ -44,4 +44,4 @@ func _resize_columns() -> void:
 	if dynamic_columns:
 		var max_size: float = tile_container_scroll_container.size.x - tile_container_margin.get_theme_constant("margin_left") - tile_container_margin.get_theme_constant("margin_right")
 		var column_width: float = ColorTile.TILE_SIZE + get_theme_constant("v_separation")
-		columns = floori(max_size / column_width)
+		columns = max(1, floori(max_size / column_width))
