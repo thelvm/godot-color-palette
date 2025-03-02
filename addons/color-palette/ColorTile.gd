@@ -5,6 +5,8 @@ extends ColorRect
 signal tile_deleted(index: int)
 signal tile_selected(index: int)
 
+const TILE_SIZE: float = 30
+
 @onready var parent: PaletteTileContainer = get_parent() as PaletteTileContainer
 
 var dragging: bool = false
@@ -14,7 +16,7 @@ var palette_color: PaletteColor:
 		color = new_palette_color.color
 
 func _ready():
-	custom_minimum_size = Vector2(30,30)
+	custom_minimum_size = Vector2(TILE_SIZE, TILE_SIZE)
 	mouse_filter = MOUSE_FILTER_PASS
 
 func _gui_input(event):

@@ -6,7 +6,7 @@ var name: String = "Palette"
 var path: String
 var comments: String
 var colors: Array[PaletteColor]
-var columns: int
+var columns: int = 0
 
 
 func add_color(p_color : Color, name: String = "", p_index: int = -1) -> void:
@@ -44,6 +44,7 @@ func save():
 	var file: FileAccess = FileAccess.open(path, FileAccess.WRITE)
 	file.store_line("GIMP Palette")
 	file.store_line("Name: " + name)
+	file.store_line("Columns: " + str(columns))
 
 	var comment_lines: PackedStringArray = comments.split("\n", false)
 	for cl: String in comment_lines:

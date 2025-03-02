@@ -29,12 +29,26 @@ layout_mode = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="PaletteNameLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Name:"
+
 [node name="PaletteNameLineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 placeholder_text = "Palette Name"
 expand_to_text_length = true
-flat = true
+
+[node name="ColumnsCountLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Columns:"
+
+[node name="ColumnCountSpinBox" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 1
+max_value = 255.0
+rounded = true
 
 [node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -55,18 +69,20 @@ text = "Update From Picker"
 layout_mode = 2
 mouse_filter = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
+[node name="TileContainerScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/ScrollContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/TileContainerScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_sa7hd")
 
-[node name="PaletteTileContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/PanelContainer"]
+[node name="TileContainerMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/TileContainerScrollContainer/PanelContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -75,10 +91,14 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="TileContainer" type="HFlowContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/PanelContainer/PaletteTileContainer"]
+[node name="TileContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/TileContainerScrollContainer/PanelContainer/TileContainerMargin"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
 script = ExtResource("1")
 
 [connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
 [connection signal="text_submitted" from="MarginContainer/VBoxContainer/HBoxContainer/PaletteNameLineEdit" to="." method="_on_palette_name_text_submitted"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/HBoxContainer/ColumnCountSpinBox" to="." method="_on_column_count_spin_box_value_changed"]
+[connection signal="resized" from="MarginContainer/VBoxContainer/TileContainerScrollContainer" to="MarginContainer/VBoxContainer/TileContainerScrollContainer/PanelContainer/TileContainerMargin/TileContainer" method="_resize_columns"]

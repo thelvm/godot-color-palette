@@ -34,6 +34,9 @@ static func import_gpl(path : String) -> Palette:
 			elif line_number == 1 and line.begins_with("Name:"):
 				# Palette has a custom name
 				result.name = line.trim_prefix("Name:").strip_edges()
+			elif line_number == 2 and line.begins_with("Columns:"):
+				# Palette has a custom number of columns
+				result.columns = int(line.trim_prefix("Columns:").strip_edges())
 			elif line.begins_with('#'):
 				# Line is a comment
 				comments += line.trim_prefix('#') + '\n'

@@ -10,6 +10,7 @@ signal container_selected(container_object)
 @onready var btn_load_to_picker: Button = %BtnLoadToPicker
 @onready var btn_update_from_picker: Button = %BtnUpdateFromPicker
 @onready var palette_name_line_edit: LineEdit = %PaletteNameLineEdit
+@onready var column_count_spin_box: SpinBox = %ColumnCountSpinBox
 @onready var grid: PaletteTileContainer = %TileContainer as PaletteTileContainer
 
 var palette: Palette
@@ -26,6 +27,7 @@ func _ready():
 	if palette:
 		palette_name_line_edit.text = palette.name
 		palette_name_line_edit.tooltip_text = palette.path
+		column_count_spin_box.set_value_no_signal(palette.columns)
 		for palette_color: PaletteColor in palette.colors:
 #			Color rect instance properties
 			var cri: ColorTile = ColorTile.new()
@@ -33,6 +35,7 @@ func _ready():
 			cri.tile_selected.connect(_on_tile_selected)
 			cri.tile_deleted.connect(_on_tile_deleted)
 			grid.add_child(cri)
+		grid.call_deferred("set_smart_columns", palette.columns)
 
 func load_to_picker():
 	var new_picker_presets: PackedColorArray
@@ -123,3 +126,9 @@ func _on_palette_name_text_submitted(new_name: String) -> void:
 		palette.save()
 		palette_updated.emit()
 		
+
+
+func _on_column_count_spin_box_value_changed(value: float) -> void:
+	palette.columns = value
+	palette.save()
+	grid.set_smart_columns(value)

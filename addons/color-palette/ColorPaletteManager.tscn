@@ -133,4 +133,5 @@ layout_mode = 2
 can_add_swatches = false
 presets_visible = false
 
+[connection signal="focus_entered" from="HBoxContainer/ColorPaletteContainer/PaletteList/Godot Icon Colors" to="HBoxContainer/ColorPaletteContainer/PaletteList/Godot Icon Colors" method="_on_focus_entered"]
 [connection signal="text_submitted" from="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/ColorNameLineEdit" to="." method="_on_color_name_line_edit_text_submitted"]
