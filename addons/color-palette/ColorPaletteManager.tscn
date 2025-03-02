@@ -28,7 +28,7 @@ layout_mode = 2
 
 [node name="Title" type="Label" parent="HBoxContainer/ColorPaletteContainer/OptionsContainer"]
 layout_mode = 2
-text = "Palette Directory"
+text = "Palettes Directory"
 
 [node name="PaletteDirectoryLineEdit" type="LineEdit" parent="HBoxContainer/ColorPaletteContainer/OptionsContainer"]
 unique_name_in_owner = true
@@ -89,12 +89,18 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Select a palette or color..."
 
-[node name="ColorNameLineEdit" type="LineEdit" parent="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Color name:"
+
+[node name="ColorNameLineEdit" type="LineEdit" parent="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 placeholder_text = "Unnamed"
-expand_to_text_length = true
-flat = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer"]
 layout_mode = 2
@@ -134,4 +140,4 @@ can_add_swatches = false
 presets_visible = false
 
 [connection signal="focus_entered" from="HBoxContainer/ColorPaletteContainer/PaletteList/Godot Icon Colors" to="HBoxContainer/ColorPaletteContainer/PaletteList/Godot Icon Colors" method="_on_focus_entered"]
-[connection signal="text_submitted" from="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/ColorNameLineEdit" to="." method="_on_color_name_line_edit_text_submitted"]
+[connection signal="text_submitted" from="HBoxContainer/ColorEditorContainer/Scroll/ColorPickerContainer/HBoxContainer2/ColorNameLineEdit" to="." method="_on_color_name_line_edit_text_submitted"]

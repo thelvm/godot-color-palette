@@ -136,11 +136,17 @@ func _add_color_to_selected_palette() -> void:
 
 
 func _open_dir_in_file_manager():
-	var path = ProjectSettings.globalize_path(palette_dir_le.text)
-	if DirAccess.dir_exists_absolute(path):
-		OS.shell_open(path)
-	else:
-		push_error("Invalid directory.")
+	var file_dialog: FileDialog = FileDialog.new()
+	file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_DIR
+	file_dialog.access = FileDialog.ACCESS_FILESYSTEM
+	file_dialog.current_dir = ProjectSettings.globalize_path(palette_dir_le.text)
+	file_dialog.use_native_dialog = true
+	file_dialog.dir_selected.connect(func(folder: String):
+		palette_dir_le.text = folder
+		refresh_palettes())
+	
+	add_child(file_dialog)
+	file_dialog.popup_centered()
 
 
 func _on_color_name_line_edit_text_submitted(new_name: String) -> void:
